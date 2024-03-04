@@ -17,8 +17,9 @@ router.post("/signup", (req, res) => {
 
   // Vérification notation de l'email
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(req.body.email)) {
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (!EMAIL_REGEX.test(req.body.email)) {
     res.json({ result: false, error: "Invalid email format" });
     return;
   }
