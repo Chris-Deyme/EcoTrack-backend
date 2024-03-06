@@ -45,9 +45,7 @@ router.post("/signup", (req, res) => {
           date: new Date(),
           user: newDoc._id,
         });
-        console.log("renvoie des données");
         newScore.save().then((score) => {
-          console.log("sauvegarde su score");
 
           res.json({
             result: true,
@@ -84,5 +82,35 @@ router.post("/signin", (req, res) => {
     }
   });
 });
+
+// DELETE
+
+router.delete("/deleteUser/:username", (req, res) => {
+  const userName = req.params.username;
+  User.deleteOne({username: userName})
+    .then((data) => {
+      res.json({ result: true, user: data });
+    })
+    .catch((err) => {
+      res.status(500).json({ result: false, error: err.message });
+    });
+    
+});
+
+// router.delete("/deleteUser/:id", (req, res) => {
+//   const userId = req.params.id;
+//   const scoreId = req.params.user;
+//   Score.deleteOne(scoreId)
+//     .then((data) => {
+//       console.log(data)
+//       User.findByIdAndDelete(userId)
+//       .then((data) => {
+//       res.json({ result: true, user: data });
+//     })})
+//     .catch((err) => {
+//       res.status(500).json({ result: false, error: err.message });
+//     });
+    
+// });
 
 module.exports = router;
