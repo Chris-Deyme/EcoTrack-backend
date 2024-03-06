@@ -3,25 +3,13 @@ var router = express.Router();
 const Score = require("../models/scores");
 const User = require("../models/users");
 
-router.post("/creation", (req, res) => {
-  User.findOne({ token: req.body.token }).then((user) => {
-    const newScore = new Score({
-      score: 0,
-      carbone: 0,
-      date: new Date(),
-      user: user._id,
-    });
-    newScore.save().then((newScore) => {
-      res.json({ result: true, score: newScore });
-    });
-  });
-});
+router.post("/creation", (req, res) => {});
 
 router.get("/showScore/:user", (req, res) => {
   Score.findOne({ user: req.params.user }).then((score) => {
     console.log(score);
     if (score) {
-      res.json({ result: true, score: score });
+      res.json({ result: true, userData: score });
     } else {
       res.json({ result: false, error: "Pas de score trouvé" });
     }

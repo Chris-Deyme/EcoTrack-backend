@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
-
 const User = require("../models/users");
+const Score = require("../models/scores");
 const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
@@ -39,7 +39,23 @@ router.post("/signup", (req, res) => {
       });
 
       newUser.save().then((newDoc) => {
-        res.json({ result: true, token: newDoc.token });
+        const newScore = new Score({
+          score: 0,
+          carbone: 0,
+          date: new Date(),
+          user: newDoc._id,
+        });
+        console.log("renvoie des données");
+        newScore.save().then((score) => {
+          console.log("sauvegarde su score");
+
+          res.json({
+            result: true,
+            token: newDoc.token,
+            userData: newDoc,
+            scoreInfo: score,
+          });
+        });
       });
     } else {
       // Si l'utilisateur existe déjà...
@@ -62,7 +78,7 @@ router.post("/signin", (req, res) => {
     if (!data) {
       res.json({ result: false, error: "User not found" });
     } else if (bcrypt.compareSync(req.body.password, data.password)) {
-      res.json({ result: true, token: data.token });
+      res.json({ result: true, token: data.token, userData: data });
     } else {
       res.json({ result: false, error: "Wrong password" });
     }
