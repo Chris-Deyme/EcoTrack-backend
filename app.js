@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var scoreRouter = require('./routes/scores');
 var activityRouter = require('./routes/activities');
 var structureRouter = require('./routes/structures');
+var tipsRouter = require('./routes/tips')
 
 var app = express();
 const cors = require("cors")
@@ -27,5 +28,6 @@ app.use('/users', usersRouter);
 app.use('/scores', scoreRouter);
 app.use('/activities', activityRouter);
 app.use('/structures', structureRouter);
+app.use('/tips', tipsRouter);
 
 module.exports = app;
