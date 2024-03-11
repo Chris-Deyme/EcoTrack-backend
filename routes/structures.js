@@ -11,20 +11,31 @@ router.post("/newStructure", (req, res) => {
   }
     Structure.findOne({ name: req.body.name }).then((data) => {
       if (data === null) {
+
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${req.body.street}&postcode=${req.body.postcode}`)
+        .then(response => response.json())
+        .then(govAnsw => {
+       
         const newStructure = new Structure({
-          name: req.body.name,
-          category: req.body.category,
-          user: req.body.user,
-          address: {
-            street: req.body.street,
-            city: req.body.city,
-            postcode: req.body.postcode,
-          },
-        });
+                  name: req.body.name,
+                  category: req.body.category,
+                  user: req.body.user,
+                  address: {
+                    street: req.body.street,
+                    city: req.body.city,
+                    postcode: req.body.postcode,
+                    longitude:govAnsw.features[0].geometry.coordinates[0], 
+                    latitude:govAnsw.features[0].geometry.coordinates[1]
+                  },
+                });
 
         newStructure.save().then((structure) => {
           res.json({ result: true, structure: structure });
         });
+
+        })
+      
+        
       } else {
         // Si l'utilisateur existe déjà...
         res.json({ result: false, error: "Stucture already exists" });
@@ -57,8 +68,8 @@ router.get("/showStructure/:user", (req, res) => {
   });
 });
 
-router.delete("/deleteStructure/:user", (req, res) => {
-  Structure.deleteOne({ user: req.params.user })
+router.delete("/deleteStructure/:id", (req, res) => {
+  Structure.deleteOne({ _id: req.params.id })
     .then((data) => {
       res.json({ result: true, response: "Structure supprimée" });
     })

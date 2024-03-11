@@ -4,6 +4,8 @@ const addressSchema = mongoose.Schema({
   street: String,
   city: String,
   postcode: String,
+  latitude:String,
+  longitude:String
 });
 
 const structureSchema = mongoose.Schema({
