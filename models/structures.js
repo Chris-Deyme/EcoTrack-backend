@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const addressSchema = mongoose.Schema({
   street: String,
   city: String,
-  postcode: Number,
+  postcode: String,
 });
 
 const structureSchema = mongoose.Schema({
