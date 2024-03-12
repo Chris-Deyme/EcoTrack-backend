@@ -26,14 +26,14 @@ router.put("/updateScore/:user", (req, res) => {
 
     // Limiter le score et carbonne entre 0 et 100
     const limitedScore = Math.min(Math.max(newScore, 0), 100);
-    
+    const carboneFixed = parseFloat(newCarbone.toFixed(2));
 
     // modifie le score existant avec le nouveau score additionné
     Score.updateOne(
       { user: req.params.user },
-      { score: limitedScore, carbone: newCarbone }
+      { score: limitedScore, carbone: carboneFixed}
     ).then((data) => {
-      res.json({ result: true, score: limitedScore, carbone: newCarbone  });
+      res.json({ result: true, score: limitedScore, carbone: carboneFixed });
     });
   });
 });
