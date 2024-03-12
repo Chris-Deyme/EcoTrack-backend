@@ -59,4 +59,19 @@ router.delete("/deleteScore/:user", (req, res) => {
 //   })
 // })
 
+router.get("/classement", (req, res) => {
+  Score.find()
+    .populate("user")
+    .sort({ score: +1 }) // Trier les scores par ordre décroissant
+    .then((scores) => {
+      res.json({ result: true, classement: scores });
+    })
+    .catch((error) => {
+      res.status(500).json({ result: false, error: error.message });
+    });
+});
+
+
+
+
 module.exports = router;
