@@ -4,7 +4,6 @@ const Activity = require("../models/activities");
 
 router.get("/showActivity/:category", (req, res) => {
   Activity.find({ category: req.params.category }).then((data) => {
-    console.log(data);
     if (data) {
       res.json({ result: true, activities: data });
     } else {
@@ -16,9 +15,7 @@ router.get("/showActivity/:category", (req, res) => {
 router.get("/activityName/:name", (req, res) => {
   const nameRegex = new RegExp(req.params.name.split(" ").join("|"), "i");
   Activity.find({ name: nameRegex })
-    // Activity.find({ name: req.params.name })
     .then((data) => {
-      console.log("coucou ", data);
       if (data) {
         res.json({ result: true, activities: data });
       } else {
@@ -29,7 +26,6 @@ router.get("/activityName/:name", (req, res) => {
 
 router.get("/showActivity", (req, res) => {
   Activity.find().then((data) => {
-    console.log(data);
     if (data) {
       res.json({ result: true, activities: data });
     } else {

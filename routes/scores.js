@@ -7,7 +7,6 @@ router.post("/creation", (req, res) => {});
 
 router.get("/showScore/:user", (req, res) => {
   Score.findOne({ user: req.params.user }).then((score) => {
-    console.log(score);
     if (score) {
       res.json({ result: true, userData: score });
     } else {
@@ -47,17 +46,6 @@ router.delete("/deleteScore/:user", (req, res) => {
       res.status(500).json({ result: false, error: "Pas supprimé" });
     });
 });
-
-// router.get("/showScore/:user", (req, res) => {
-//   Score.findOne({user: req.params.user}).then((user) => {
-//     console.log(user)
-//     if (user) {
-//       res.json({ result: true, score: user });
-//     } else {
-//       res.json({ result: false, error: "0 Jokes" });
-//     }
-//   })
-// })
 
 router.get("/classement", (req, res) => {
   Score.find()

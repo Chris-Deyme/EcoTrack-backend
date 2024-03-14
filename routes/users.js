@@ -16,7 +16,6 @@ router.post("/signup", (req, res) => {
   }
 
   // Vérification notation de l'email
-
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!EMAIL_REGEX.test(req.body.email)) {
@@ -71,7 +70,6 @@ router.post("/signin", (req, res) => {
   }
 
   // Find avec $and qui permet de vérifier que le username ET l'email sont bons
-
   User.findOne({ email: req.body.email }).then((data) => {
     if (!data) {
       res.json({ result: false, error: "User not found" });
@@ -84,7 +82,6 @@ router.post("/signin", (req, res) => {
 });
 
 // DELETE
-
 router.delete("/deleteUser/:username", (req, res) => {
   const userName = req.params.username;
   User.deleteOne({username: userName})
@@ -96,21 +93,5 @@ router.delete("/deleteUser/:username", (req, res) => {
     });
     
 });
-
-// router.delete("/deleteUser/:id", (req, res) => {
-//   const userId = req.params.id;
-//   const scoreId = req.params.user;
-//   Score.deleteOne(scoreId)
-//     .then((data) => {
-//       console.log(data)
-//       User.findByIdAndDelete(userId)
-//       .then((data) => {
-//       res.json({ result: true, user: data });
-//     })})
-//     .catch((err) => {
-//       res.status(500).json({ result: false, error: err.message });
-//     });
-    
-// });
 
 module.exports = router;

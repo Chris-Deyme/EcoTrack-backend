@@ -10,15 +10,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/test", (req, res) => {
-    // Compter le nombre total de documents dans la collection
     Tip.countDocuments().then(count => {
-        // Générer un index aléatoire en fonction du nombre total de documents
         const randomIndex = Math.floor(Math.random() * count);
-
-        // Utiliser l'agrégation pour obtenir un document aléatoire
         Tip.aggregate([
-            { $skip: randomIndex }, // Ignorer les documents précédents l'index aléatoire
-            { $limit: 1 } // Limiter les résultats à un seul document
+            { $skip: randomIndex }, 
+            { $limit: 1 }
         ]).then(result => {
             res.json({ result: true, tip: result });
         }).catch(err => {

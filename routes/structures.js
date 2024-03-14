@@ -55,11 +55,10 @@ router.get("/showStructure", (req, res) => {
     });
 ;
 
-
 router.get("/showStructure/:user", (req, res) => {
 
   Structure.find({ user: req.params.user }).then((structure) => {
-    console.log(structure);
+
     if (structure) {
       res.json({ result: true, userData: structure });
     } else {
