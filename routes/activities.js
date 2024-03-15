@@ -14,6 +14,7 @@ router.get("/showActivity/:category", (req, res) => {
 
 router.get("/activityName/:name", (req, res) => {
   const nameRegex = new RegExp(req.params.name.split(" ").join("|"), "i");
+  console.log("this", nameRegex)
   Activity.find({ name: nameRegex })
     .then((data) => {
       if (data) {
